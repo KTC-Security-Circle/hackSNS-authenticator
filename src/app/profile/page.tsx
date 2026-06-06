@@ -194,10 +194,10 @@ export default async function ProfilePage() {
 
       {/* Bottom Nav */}
       <nav className={styles.bottomNav}>
-        <Link href="/feed" className={styles.navIcon}><Icon icon="ph:house" width={24} height={24} /></Link>
-        <Link href="/search" className={styles.navIcon}><Icon icon="ph:magnifying-glass" width={24} height={24} /></Link>
-        <Link href="/create" className={styles.navIcon}><Icon icon="ph:plus-square" width={24} height={24} /></Link>
-        <Link href="/notif" className={styles.navIcon}><Icon icon="ph:bell" width={24} height={24} /></Link>
+        <Link href="/feed" className={styles.navIcon} aria-label="ホーム"><Icon icon="ph:house" width={24} height={24} aria-hidden="true" /></Link>
+        <Link href="/search" className={styles.navIcon} aria-label="検索"><Icon icon="ph:magnifying-glass" width={24} height={24} aria-hidden="true" /></Link>
+        <Link href="/create" className={styles.navIcon} aria-label="作成"><Icon icon="ph:plus-square" width={24} height={24} aria-hidden="true" /></Link>
+        <Link href="/notif" className={styles.navIcon} aria-label="通知"><Icon icon="ph:bell" width={24} height={24} aria-hidden="true" /></Link>
         <Link href="/profile">
            <div className={styles.navProfile}></div>
         </Link>
