@@ -37,11 +37,11 @@ export default function LandingPage() {
               />
               {/* ボトムナビ */}
               <div className={styles.mockNav}>
-                <Link href="/login"><Icon icon="ph:house"            width={20} height={20} className={styles.mockNavIcon} /></Link>
-                <Link href="/login"><Icon icon="ph:magnifying-glass" width={20} height={20} className={styles.mockNavIcon} /></Link>
-                <Link href="/login"><Icon icon="ph:plus-square"      width={20} height={20} className={styles.mockNavIcon} /></Link>
-                <Link href="/login"><Icon icon="ph:heart"            width={20} height={20} className={styles.mockNavIcon} /></Link>
-                <Link href="/login"><Icon icon="ph:compass"          width={20} height={20} className={styles.mockNavIcon} /></Link>
+                <Link href="/login" aria-label="ホーム"><Icon icon="ph:house"            width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="検索"><Icon icon="ph:magnifying-glass" width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="作成"><Icon icon="ph:plus-square"      width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="いいね"><Icon icon="ph:heart"            width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="発見"><Icon icon="ph:compass"          width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
               </div>
             </div>
           </div>
