@@ -75,6 +75,8 @@
   justify-content: center;
   color: var(--theme-color, #262626);
   font-weight: bold;
+  position: relative;
+  overflow: hidden;
 }
 
 .stats {
@@ -176,6 +178,7 @@
   background: linear-gradient(135deg, var(--gradient-start, #efefef), var(--gradient-end, #dbdbdb));
   opacity: 0.8;
   position: relative;
+  overflow: hidden;
 }
 
 /* Bottom Nav */

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Icon } from '@iconify/react';
 import styles from './page.module.css';
 
 export default function LandingPage() {
@@ -36,11 +37,11 @@ export default function LandingPage() {
               />
               {/* ボトムナビ */}
               <div className={styles.mockNav}>
-                <Image src="/icon-home.svg"     alt="ホーム"  width={20} height={20} className={styles.mockNavIcon} />
-                <Image src="/icon-search.svg"   alt="検索"    width={20} height={20} className={styles.mockNavIcon} />
-                <Image src="/icon-new-post.svg" alt="作成"    width={20} height={20} className={styles.mockNavIcon} />
-                <Image src="/icon-heart.svg"    alt="いいね"  width={20} height={20} className={styles.mockNavIcon} />
-                <Image src="/icon-explore.svg"  alt="発見"    width={20} height={20} className={styles.mockNavIcon} />
+                <Link href="/login" aria-label="ホーム"><Icon icon="ph:house"            width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="検索"><Icon icon="ph:magnifying-glass" width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="作成"><Icon icon="ph:plus-square"      width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="いいね"><Icon icon="ph:heart"            width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
+                <Link href="/login" aria-label="発見"><Icon icon="ph:compass"          width={20} height={20} className={styles.mockNavIcon} aria-hidden="true" /></Link>
               </div>
             </div>
           </div>

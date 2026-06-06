@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Icon } from '@iconify/react';
 import styles from './PostCard.module.css';
 
 interface PostCardProps {
@@ -57,17 +58,17 @@ export default function PostCard({
         <div className={styles.actionButtons}>
           <div className={styles.leftActions}>
             <button className={styles.actionButton} aria-label="いいね">
-              <Image src="/icon-heart.svg" alt="いいね" width={24} height={24} />
+              <Icon icon="ph:heart" width={24} height={24} />
             </button>
             <button className={styles.actionButton} aria-label="コメント">
-              <Image src="/icon-comment.svg" alt="コメント" width={24} height={24} />
+              <Icon icon="ph:chat-circle" width={24} height={24} />
             </button>
             <button className={styles.actionButton} aria-label="シェア">
-              <Image src="/icon-share.svg" alt="シェア" width={24} height={24} />
+              <Icon icon="ph:paper-plane-tilt" width={24} height={24} />
             </button>
           </div>
           <button className={styles.actionButton} aria-label="保存">
-            <Image src="/icon-bookmark.svg" alt="保存" width={24} height={24} />
+            <Icon icon="ph:bookmark-simple" width={24} height={24} />
           </button>
         </div>
 

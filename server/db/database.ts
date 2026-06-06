@@ -73,4 +73,51 @@ if (userCount === 0) {
   insertFollow.run(5, 3, '2026-01-02 11:00:00');
 }
 
+// アバターURLをテーマ別 picsum に更新（既存DBにも適用、べき等）
+const updateAvatar = db.prepare("UPDATE users SET avatar_url = ? WHERE username = ? AND (avatar_url IS NULL OR avatar_url NOT LIKE 'https://picsum.photos%')");
+updateAvatar.run('https://picsum.photos/seed/av-admin/80/80',  'admin');
+updateAvatar.run('https://picsum.photos/seed/av-take/80/80',   'take');
+updateAvatar.run('https://picsum.photos/seed/av-alice/80/80',  'alice');
+updateAvatar.run('https://picsum.photos/seed/av-bob/80/80',    'bob');
+updateAvatar.run('https://picsum.photos/seed/av-chris/80/80',  'chris');
+
+// ジャンル別画像投稿（各ユーザーのプロフィールグリッド用）
+const genrePostCount = (db.prepare('SELECT COUNT(*) as cnt FROM posts WHERE id >= 100').get() as { cnt: number }).cnt;
+if (genrePostCount === 0) {
+  const insertGenrePost = db.prepare('INSERT OR IGNORE INTO posts (id, user_id, content, image_url, created_at) VALUES (?, ?, ?, ?, ?)');
+
+  // user_id は上の insertUser.run(id, ...) と対応: 2=take, 3=alice, 4=bob, 5=chris
+  // take (user_id: 2) - 食べ物・カフェ
+  const takeContents = ['お気に入りのカフェ☕', '今日のスイーツ🍰', 'ランチタイム🍱', '新しいレストランを発見🍽️',
+    '自家製パスタを作りました🍝', '朝食の時間☀️', 'ティータイム🫖', '美味しいピザ🍕',
+    'フルーツタルト🥧', '抹茶ラテ🍵', '焼き菓子づくり🧁', '週末のブランチ🥞'];
+  takeContents.forEach((content, i) => {
+    insertGenrePost.run(100 + i, 2, content, `https://picsum.photos/seed/take-${i + 1}/300/300`, `2026-03-${(i + 1).toString().padStart(2, '0')} 10:00:00`);
+  });
+
+  // alice (user_id: 3) - 海・旅行
+  const aliceContents = ['海岸を散歩🌊', '夕日が綺麗だった🌅', '旅先の景色📷', '青い空と海🏖️',
+    '船から見た景色⛵', '旅の記録✈️', 'ビーチでリラックス🏝️', '波打ち際🌊',
+    '港町の朝🌄', '旅行の思い出🗺️', '海辺のカフェ☕', 'クルーズ旅行🚢'];
+  aliceContents.forEach((content, i) => {
+    insertGenrePost.run(112 + i, 3, content, `https://picsum.photos/seed/alice-${i + 1}/300/300`, `2026-03-${(i + 1).toString().padStart(2, '0')} 11:00:00`);
+  });
+
+  // bob (user_id: 4) - 自然・アウトドア
+  const bobContents = ['山登りしてきた⛰️', '森の中を散歩🌳', '滝を発見！💦', '野原でピクニック🌻',
+    'キャンプ最高🏕️', '早朝ハイキング🥾', '花が咲いてた🌸', '夕暮れの山🌄',
+    '渓流釣り🎣', '新緑の季節🌿', 'トレイルランニング🏃', '星空観察🌟'];
+  bobContents.forEach((content, i) => {
+    insertGenrePost.run(124 + i, 4, content, `https://picsum.photos/seed/bob-${i + 1}/300/300`, `2026-03-${(i + 1).toString().padStart(2, '0')} 12:00:00`);
+  });
+
+  // chris (user_id: 5) - 都市・夜景
+  const chrisContents = ['夜景が綺麗だった🌃', '都市の朝🌆', 'ネオンライトの街🌉', '展望台からの景色🏙️',
+    '深夜の街歩き🚶', '雨の夜の街💧', 'ライトアップされた橋🌉', 'カフェからの街並み☕',
+    '都市の路地裏📸', 'ビル群の夕暮れ🏢', '繁華街の夜🎭', '朝の都市風景🌇'];
+  chrisContents.forEach((content, i) => {
+    insertGenrePost.run(136 + i, 5, content, `https://picsum.photos/seed/chris-${i + 1}/300/300`, `2026-03-${(i + 1).toString().padStart(2, '0')} 13:00:00`);
+  });
+}
+
 export default db;

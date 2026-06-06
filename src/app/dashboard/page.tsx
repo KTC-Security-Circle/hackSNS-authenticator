@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Icon } from '@iconify/react';
 import Header from '@/components/Header';
 import PostCard from '@/components/PostCard';
 import styles from './dashboard.module.css';
@@ -56,28 +57,28 @@ export default async function DashboardPage() {
           <div className={styles.sidebarCard}>
             <h2 className={styles.sidebarTitle}>メニュー</h2>
             <Link href="/dashboard" className={styles.menuItem}>
-              <span>🏠</span>
+              <Icon icon="ph:house" width={20} height={20} />
               <span>ホーム</span>
             </Link>
             <Link href="/profile" className={styles.menuItem}>
-              <span>👤</span>
+              <Icon icon="ph:user" width={20} height={20} />
               <span>プロフィール</span>
             </Link>
             <Link href="/messages" className={styles.menuItem}>
-              <span>💬</span>
+              <Icon icon="ph:chat-circle" width={20} height={20} />
               <span>メッセージ</span>
             </Link>
             <Link href="/bookmarks" className={styles.menuItem}>
-              <span>🔖</span>
+              <Icon icon="ph:bookmark-simple" width={20} height={20} />
               <span>ブックマーク</span>
             </Link>
             <Link href="/settings" className={styles.menuItem}>
-              <span>⚙️</span>
+              <Icon icon="ph:gear" width={20} height={20} />
               <span>設定</span>
             </Link>
             <form action={logoutAction}>
               <button type="submit" className={styles.menuItem} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
-                <span>🚪</span>
+                <Icon icon="ph:sign-out" width={20} height={20} />
                 <span>ログアウト</span>
               </button>
             </form>
