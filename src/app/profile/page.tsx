@@ -175,9 +175,9 @@ export default async function ProfilePage() {
 
       {/* Tabs */}
       <div className={styles.tabs}>
-        <Link href="/profile" className={`${styles.tab} ${styles.activeTab}`}><Icon icon="ph:grid-four" width={24} height={24} /></Link>
-        <Link href="/reels" className={styles.tab}><Icon icon="ph:video-camera" width={24} height={24} /></Link>
-        <Link href="/tagged" className={styles.tab}><Icon icon="ph:tag" width={24} height={24} /></Link>
+        <Link href="/profile" className={`${styles.tab} ${styles.activeTab}`} aria-label="投稿グリッド"><Icon icon="ph:grid-four" width={24} height={24} aria-hidden="true" /></Link>
+        <Link href="/reels" className={styles.tab} aria-label="リール"><Icon icon="ph:video-camera" width={24} height={24} aria-hidden="true" /></Link>
+        <Link href="/tagged" className={styles.tab} aria-label="タグ付け"><Icon icon="ph:tag" width={24} height={24} aria-hidden="true" /></Link>
       </div>
 
       {/* Grid */}
