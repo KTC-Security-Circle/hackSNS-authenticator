@@ -128,7 +128,7 @@ export default async function ProfilePage() {
         <div className={styles.headerTitle}>
           {user.username} <span className={styles.verified}><Icon icon="ph:seal-check" width={20} height={20} /></span>
         </div>
-        <Link href="/settings" className={styles.menuIcon}><Icon icon="ph:list" width={24} height={24} /></Link>
+        <Link href="/settings" className={styles.menuIcon} aria-label="メニュー"><Icon icon="ph:list" width={24} height={24} aria-hidden="true" /></Link>
       </header>
       
       {/* Profile Info */}
