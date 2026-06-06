@@ -30,36 +30,41 @@ export default function Header({ username = 'User' }: HeaderProps) {
             href="/feed"
             className={`${styles.navIconLink} ${pathname === '/feed' ? styles.navIconLinkActive : ''}`}
             title="ホーム"
+            aria-label="ホーム"
           >
-            <Icon icon="ph:house" width={24} height={24} />
+            <Icon icon="ph:house" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/feed"
             className={styles.navIconLink}
             title="メッセージ"
+            aria-label="メッセージ"
           >
-            <Icon icon="ph:paper-plane-tilt" width={24} height={24} />
+            <Icon icon="ph:paper-plane-tilt" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/feed"
             className={styles.navIconLink}
             title="新規投稿"
+            aria-label="新規投稿"
           >
-            <Icon icon="ph:plus-square" width={24} height={24} />
+            <Icon icon="ph:plus-square" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/explore"
             className={`${styles.navIconLink} ${pathname === '/explore' ? styles.navIconLinkActive : ''}`}
             title="探索"
+            aria-label="探索"
           >
-            <Icon icon="ph:compass" width={24} height={24} />
+            <Icon icon="ph:compass" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/notifications"
             className={`${styles.navIconLink} ${pathname === '/notifications' ? styles.navIconLinkActive : ''}`}
             title="通知"
+            aria-label="通知"
           >
-            <Icon icon="ph:bell" width={24} height={24} />
+            <Icon icon="ph:bell" width={24} height={24} aria-hidden="true" />
           </Link>
           <div className={styles.userSection}>
             <Link href="/profile" className={styles.navIconLink} title={username}>
