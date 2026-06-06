@@ -46,15 +46,8 @@ if (-not $ready) {
     Write-Host '[警告] サーバーの起動確認がタイムアウトしました。ブラウザを開きます。'
 }
 
-# 実習用ターミナルを起動 (コンテナ内部)
-Start-Process powershell.exe -ArgumentList @(
-    '-NoProfile',
-    '-NoExit',
-    '-Command', 'docker compose exec frontend sh'
-) -WorkingDirectory $PSScriptRoot -WindowStyle Normal
-
-# ブラウザで開く
-Start-Process 'http://localhost:3000'
+# ターミナルとブラウザを起動
+cmd /c "`"$PSScriptRoot\launch.bat`""
 
 Write-Host 'ブラウザが起動しました。'
 Write-Host 'このウィンドウは自動で閉じます。'
