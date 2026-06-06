@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Icon } from '@iconify/react';
 import styles from "./profile.module.css";
 import { getSession } from '@/server/actions/auth-actions';
 import db from '@/server/db/database';
@@ -20,6 +22,7 @@ export default async function ProfilePage() {
   const postCount = (db.prepare('SELECT COUNT(*) as cnt FROM posts WHERE user_id = ?').get(user.id) as any).cnt;
   const followersCount = (db.prepare('SELECT COUNT(*) as cnt FROM follows WHERE following_id = ?').get(user.id) as any).cnt;
   const followingCount = (db.prepare('SELECT COUNT(*) as cnt FROM follows WHERE follower_id = ?').get(user.id) as any).cnt;
+  const gridPosts = db.prepare('SELECT id, image_url FROM posts WHERE user_id = ? AND image_url IS NOT NULL ORDER BY created_at DESC LIMIT 12').all(user.id) as { id: number; image_url: string }[];
 
   // Render Admin Dashboard
   if (user.username === 'admin') {
@@ -123,9 +126,9 @@ export default async function ProfilePage() {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerTitle}>
-          {user.username} <span className={styles.verified}>☑️</span>
+          {user.username} <span className={styles.verified}><Icon icon="ph:seal-check" width={20} height={20} /></span>
         </div>
-        <div className={styles.menuIcon}>≡</div>
+        <Link href="/settings" className={styles.menuIcon}><Icon icon="ph:list" width={24} height={24} /></Link>
       </header>
       
       {/* Profile Info */}
@@ -133,7 +136,11 @@ export default async function ProfilePage() {
         <div className={styles.avatarContainer}>
           <div className={styles.storyRing}>
             <div className={styles.avatar}>
-               <span style={{fontSize: '36px'}}>{user.username.charAt(0).toUpperCase()}</span>
+              {user.avatar_url?.startsWith('https://') ? (
+                <Image src={user.avatar_url} alt={user.display_name || user.username} fill style={{ objectFit: 'cover' }} />
+              ) : (
+                <span style={{ fontSize: '36px' }}>{user.username.charAt(0).toUpperCase()}</span>
+              )}
             </div>
           </div>
         </div>
@@ -168,24 +175,29 @@ export default async function ProfilePage() {
 
       {/* Tabs */}
       <div className={styles.tabs}>
-        <div className={`${styles.tab} ${styles.activeTab}`}>▦</div>
-        <div className={styles.tab}>📺</div>
-        <div className={styles.tab}>🏷️</div>
+        <Link href="/profile" className={`${styles.tab} ${styles.activeTab}`}><Icon icon="ph:grid-four" width={24} height={24} /></Link>
+        <Link href="/reels" className={styles.tab}><Icon icon="ph:video-camera" width={24} height={24} /></Link>
+        <Link href="/tagged" className={styles.tab}><Icon icon="ph:tag" width={24} height={24} /></Link>
       </div>
 
       {/* Grid */}
       <div className={styles.grid}>
-        {[...Array(12)].map((_, i) => (
-          <div key={i} className={styles.gridItem}></div>
+        {gridPosts.map((post) => (
+          <div key={post.id} className={styles.gridItem}>
+            <Image src={post.image_url} alt="投稿" fill style={{ objectFit: 'cover' }} />
+          </div>
+        ))}
+        {[...Array(Math.max(0, 12 - gridPosts.length))].map((_, i) => (
+          <div key={`ph-${i}`} className={styles.gridItem} />
         ))}
       </div>
 
       {/* Bottom Nav */}
       <nav className={styles.bottomNav}>
-        <Link href="/feed" className={styles.navIcon}>🏠</Link>
-        <div className={styles.navIcon}>🔍</div>
-        <div className={styles.navIcon}>➕</div>
-        <div className={styles.navIcon}>❤️</div>
+        <Link href="/feed" className={styles.navIcon}><Icon icon="ph:house" width={24} height={24} /></Link>
+        <Link href="/search" className={styles.navIcon}><Icon icon="ph:magnifying-glass" width={24} height={24} /></Link>
+        <Link href="/create" className={styles.navIcon}><Icon icon="ph:plus-square" width={24} height={24} /></Link>
+        <Link href="/notif" className={styles.navIcon}><Icon icon="ph:bell" width={24} height={24} /></Link>
         <Link href="/profile">
            <div className={styles.navProfile}></div>
         </Link>

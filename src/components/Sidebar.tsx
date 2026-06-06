@@ -2,22 +2,33 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { Icon } from '@iconify/react';
 import { usePathname } from 'next/navigation';
-import { logoutAction } from '@/server/actions/auth-actions';
+import { logoutAction, getSession } from '@/server/actions/auth-actions';
 import styles from './Sidebar.module.css';
 
 const navItems = [
-  { href: '/feed',      icon: '/icon-home.svg',                  label: 'ホーム' },
-  { href: '/reels',     icon: '/wordpress--video.svg',          label: 'リール動画' },
-  { href: '/messages',  icon: '/akar-icons--paper-airplane.svg', label: 'メッセージ' },
-  { href: '/search',    icon: '/icon-search.svg',                label: '検索' },
-  { href: '/explore',   icon: '/icon-explore.svg',               label: '発見' },
-  { href: '/notif',     icon: '/icon-heart.svg',                 label: 'お知らせ', badge: 1 },
-  { href: '/create',    icon: '/icon-new-post.svg',              label: '作成' },
+  { href: '/feed',      icon: 'ph:house',              label: 'ホーム' },
+  { href: '/reels',     icon: 'ph:video-camera',       label: 'リール動画' },
+  { href: '/messages',  icon: 'ph:paper-plane-tilt',   label: 'メッセージ' },
+  { href: '/search',    icon: 'ph:magnifying-glass',   label: '検索' },
+  { href: '/explore',   icon: 'ph:compass',            label: '発見' },
+  { href: '/notif',     icon: 'ph:bell',               label: 'お知らせ', badge: 1 },
+  { href: '/create',    icon: 'ph:plus-square',        label: '作成' },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [avatarUrl, setAvatarUrl] = useState<string>('');
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (session?.username) {
+        setAvatarUrl(`https://picsum.photos/seed/av-${session.username}/80/80`);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -35,9 +46,8 @@ export default function Sidebar() {
               className={`${styles.navItem} ${pathname === item.href ? styles.navItemActive : ''}`}
             >
               <div className={styles.iconWrap}>
-                <Image
-                  src={item.icon}
-                  alt={item.label}
+                <Icon
+                  icon={item.icon}
                   width={24}
                   height={24}
                   className={styles.navIcon}
@@ -50,7 +60,11 @@ export default function Sidebar() {
         </nav>
 
         <Link href="/profile" className={`${styles.navItem} ${styles.profileItem}`}>
-          <div className={styles.avatarCircle}>T</div>
+          <div className={styles.avatarCircle}>
+            {avatarUrl ? (
+              <Image src={avatarUrl} alt="avatar" fill style={{ objectFit: 'cover' }} />
+            ) : 'U'}
+          </div>
           <span className={styles.navLabel}>マイページ</span>
         </Link>
 
@@ -70,9 +84,8 @@ export default function Sidebar() {
             className={`${styles.bottomNavItem} ${pathname === item.href ? styles.bottomNavItemActive : ''}`}
           >
             <div className={styles.iconWrap}>
-              <Image
-                src={item.icon}
-                alt={item.label}
+              <Icon
+                icon={item.icon}
                 width={24}
                 height={24}
                 className={styles.navIcon}
