@@ -1,23 +1,61 @@
+<# :
 @echo off
+setlocal
 cd /d "%~dp0"
-title hackSNS Launcher
+chcp 65001 > nul
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& ([ScriptBlock]::Create((Get-Content '%~f0' -Raw -Encoding UTF8)))"
+if %ERRORLEVEL% neq 0 pause
+exit /b %ERRORLEVEL%
+#>
+$PSScriptRoot = (Get-Location).Path
 
-echo ========================================
-echo   hackSNS サーバーを起動しています...
-echo ========================================
-echo.
+Write-Host '========================================'
+Write-Host '  hackSNS サーバーを起動しています...'
+Write-Host '========================================'
+Write-Host ''
 
-REM Docker コンテナをバックグラウンドで起動
-start "hackSNS Docker" cmd /k "cd /d "%~dp0" && docker compose up --build"
+# Docker 起動確認
+docker info 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host '[エラー] Docker が起動していません。Docker Desktop を起動してから再実行してください。'
+    Start-Sleep -Seconds 3
+    exit 1
+}
 
-REM サーバーの起動を待機
-echo ブラウザを開くまで少々お待ちください...
-timeout /t 12 /nobreak > nul
+# Docker コンテナをバックグラウンドで起動
+Write-Host 'Docker コンテナを起動しています...'
+docker compose up -d --build
 
-REM ブラウザで開く
-start "" "http://localhost:3000"
+# サーバーが起動するまでポーリング（最大120秒）
+Write-Host 'ブラウザを開くまで少々お待ちください...'
+$timeout = 120
+$elapsed = 0
+$ready = $false
+while ($elapsed -lt $timeout) {
+    try {
+        Invoke-WebRequest -Uri 'http://localhost:3000' -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop | Out-Null
+        $ready = $true
+        break
+    } catch {
+        Start-Sleep -Seconds 2
+        $elapsed += 2
+    }
+}
 
-echo ブラウザが起動しました。
-echo このウィンドウは自動で閉じます。
-timeout /t 2 /nobreak > nul
-exit
+if (-not $ready) {
+    Write-Host '[警告] サーバーの起動確認がタイムアウトしました。ブラウザを開きます。'
+}
+
+# 実習用ターミナルを起動 (コンテナ内部)
+Start-Process powershell.exe -ArgumentList @(
+    '-NoProfile',
+    '-NoExit',
+    '-Command', 'docker compose exec frontend sh'
+) -WorkingDirectory $PSScriptRoot -WindowStyle Normal
+
+# ブラウザで開く
+Start-Process 'http://localhost:3000'
+
+Write-Host 'ブラウザが起動しました。'
+Write-Host 'このウィンドウは自動で閉じます。'
+Start-Sleep -Seconds 2

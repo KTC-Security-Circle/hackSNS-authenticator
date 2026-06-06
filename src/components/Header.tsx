@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import { Icon } from '@iconify/react';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/server/actions/auth-actions';
 import styles from './Header.module.css';
@@ -21,7 +21,7 @@ export default function Header({ username = 'User' }: HeaderProps) {
         </Link>
 
         <div className={styles.searchBar}>
-          <Image src="/icon-search.svg" alt="search" width={14} height={14} className={styles.searchIcon} />
+          <Icon icon="ph:magnifying-glass" width={14} height={14} className={styles.searchIcon} />
           <span className={styles.searchText}>検索</span>
         </div>
 
@@ -30,36 +30,41 @@ export default function Header({ username = 'User' }: HeaderProps) {
             href="/feed"
             className={`${styles.navIconLink} ${pathname === '/feed' ? styles.navIconLinkActive : ''}`}
             title="ホーム"
+            aria-label="ホーム"
           >
-            <Image src="/icon-home.svg" alt="ホーム" width={24} height={24} />
+            <Icon icon="ph:house" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/feed"
             className={styles.navIconLink}
             title="メッセージ"
+            aria-label="メッセージ"
           >
-            <Image src="/icon-share.svg" alt="メッセージ" width={24} height={24} />
+            <Icon icon="ph:paper-plane-tilt" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/feed"
             className={styles.navIconLink}
             title="新規投稿"
+            aria-label="新規投稿"
           >
-            <Image src="/icon-new-post.svg" alt="新規投稿" width={24} height={24} />
+            <Icon icon="ph:plus-square" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/explore"
             className={`${styles.navIconLink} ${pathname === '/explore' ? styles.navIconLinkActive : ''}`}
             title="探索"
+            aria-label="探索"
           >
-            <Image src="/icon-explore.svg" alt="探索" width={24} height={24} />
+            <Icon icon="ph:compass" width={24} height={24} aria-hidden="true" />
           </Link>
           <Link
             href="/notifications"
             className={`${styles.navIconLink} ${pathname === '/notifications' ? styles.navIconLinkActive : ''}`}
             title="通知"
+            aria-label="通知"
           >
-            <Image src="/icon-notification.svg" alt="通知" width={24} height={24} />
+            <Icon icon="ph:bell" width={24} height={24} aria-hidden="true" />
           </Link>
           <div className={styles.userSection}>
             <Link href="/profile" className={styles.navIconLink} title={username}>
