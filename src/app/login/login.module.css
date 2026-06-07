@@ -124,7 +124,7 @@
 }
 
 .loginButton {
-  background-color: #bae0fd; /* Light blue when disabled/empty (Login) */
+  background-color: #1877f2; /* Light blue when disabled/empty (Login) */
   color: white;
   border: none;
   border-radius: 4px;
